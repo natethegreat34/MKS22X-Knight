@@ -5,52 +5,6 @@ public class KnightBoard {
     public KnightBoard (int startingRows,int startingCols){
         ;
     }
-    private void possibleMoves(){
-     data = new String[rows][cols];
-     if (r + 1 < rows){
-       if (c + 2 < cols){
-        data[r + 1][c + 2] = "o";
-       }
-       if (c - 2  >= 0){
-        data[r + 1][c - 2] = "o";
-       }
-     }
-     if (r + 2 < rows){
-       if (c + 1 < cols){
-        data[r + 2][c + 1] = "o";
-       }
-       if (c - 1  >= 0){
-        data[r + 2][c - 1] = "o";
-       }
-     }
-     if (r - 1 >= 0){
-       if (c + 2 < cols){
-        data[r - 1][c + 2] = "o";
-       }
-       if (c - 2  >= 0){
-        data[r - 1][c - 2] = "o";
-       }
-     }
-     if (r - 2 >= 0){
-       if (c + 1 < cols){
-        data[r - 2][c + 1] = "o";
-       }
-       if (c - 1  >= 0){
-        data[r - 2][c - 1] = "o";
-       }
-     }
-     data[r][c] = "x";
-   }
-
-private void removeMoves(){
-    for (int r; r < rows; r ++){
-        for (int c; c < cols; c ++){
-            if (data [r] [c].equals("0")){
-                data [r] [c] = "_";
-            }
-        }
-    }
-}
     //Initialize the board to the correct size and make them all 0's
 
 
@@ -66,9 +20,10 @@ public String toString(){
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
 public boolean solve(int startingRow, int startingCol){
-    return solver(startingRow,startingCol);
+    return solver(startingRow,startingCol, -1, -1);
 }
-private boolean solver( int r, int c){
+private boolean solver( int r, int c, int prevr, int prevc){
+    // if prevr and prevc are equal to one of the options, make it false
     if (checker()){
         return true;
     }
@@ -79,7 +34,7 @@ private boolean solver( int r, int c){
     if (r + 1 < rows ){
       if (c + 2 < cols){
           if (!(data[r + 1] [c +2].equals("x"))){
-              return solver (r + 1, c + 2);
+              return solver (r + 1, c + 2,r,c);
           }
       }
      //   __ __
@@ -87,7 +42,7 @@ private boolean solver( int r, int c){
      //        x
       if (c - 2  >= 0){
           if (!(data[r + 1] [c - 2].equals("x"))){
-              return solver (r + 1, c - 2);
+              return solver (r + 1, c - 2,r,c);
           }
       }
     }
@@ -98,7 +53,7 @@ private boolean solver( int r, int c){
     if (r + 2 < rows){
       if (c + 1 < cols){
           if (!(data[r + 2] [c +1].equals("x"))){
-       return solver(r + 2,c + 1);
+       return solver(r + 2,c + 1,r,c);
       }
     }
       //  __
@@ -107,7 +62,7 @@ private boolean solver( int r, int c){
       //    x
       if (c - 1  >= 0){
           if (!(data[r + 1] [c - 1].equals("x"))){
-       return solver(r + 2,c - 1);
+       return solver(r + 2,c - 1,r,c);
         }
         }
     }
@@ -117,7 +72,7 @@ private boolean solver( int r, int c){
     if (r - 1 >= 0){
       if (c + 2 < cols){
           if (!(data[r - 1] [c + 2].equals("x"))){
-       return solver(r - 1,c + 2);
+       return solver(r - 1,c + 2,r,c);
       }
   }
       //        x
@@ -125,7 +80,7 @@ private boolean solver( int r, int c){
       //   __ __
       if (c - 2  >= 0){
           if (!(data[r - 1] [c - 2].equals("x"))){
-       return solver(r - 1,c - 2);
+       return solver(r - 1,c - 2,r,c);
       }
     }
 }
@@ -136,7 +91,7 @@ private boolean solver( int r, int c){
     if (r - 2 >= 0){
       if (c + 1 < cols){
           if (!(data[r - 2] [c + 1].equals("x"))){
-              return solver(r - 2,c + 1);
+              return solver(r - 2,c + 1,r,c);
       }
   }
       //     x
@@ -145,14 +100,23 @@ private boolean solver( int r, int c){
       //   __
       if (c - 1  >= 0){
           if (!(data[r + 1] [c - 1].equals("x"))){
-      return solver(r - 2,c - 1);
+      return solver(r - 2,c - 1,r,c);
       }
     }
     }
-    return false;
+    return solver(prevr, prevc, r,c);
   }
-// I know this is wrong but just need to write it down
-// need a way of having a list of possible moves
+public boolean checker(){
+    for (int r; r < rows; r ++){
+        for (int c; c < cols; c ++){
+            if (data [r] [c].equals("x")){
+                ;
+            }
+            else return false;
+        }
+    }
+    return true;
+}
 
 
     }
