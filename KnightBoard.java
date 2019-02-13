@@ -6,42 +6,42 @@ public class KnightBoard {
         ;
     }
     private void possibleMoves(){
-     data = new String[8][8];
-     if (yCor + 1 < 8){
-       if (xCor + 2 < 8){
-        data[yCor + 1][xCor + 2] = "o";
+     data = new String[rows][cols];
+     if (r + 1 < rows){
+       if (c + 2 < cols){
+        data[r + 1][c + 2] = "o";
        }
-       if (xCor - 2  >= 0){
-        data[yCor + 1][xCor - 2] = "o";
-       }
-     }
-     if (yCor + 2 < 8){
-       if (xCor + 1 < 8){
-        data[yCor + 2][xCor + 1] = "o";
-       }
-       if (xCor - 1  >= 0){
-        data[yCor + 2][xCor - 1] = "o";
+       if (c - 2  >= 0){
+        data[r + 1][c - 2] = "o";
        }
      }
-     if (yCor - 1 >= 0){
-       if (xCor + 2 < 8){
-        data[yCor - 1][xCor + 2] = "o";
+     if (r + 2 < rows){
+       if (c + 1 < cols){
+        data[r + 2][c + 1] = "o";
        }
-       if (xCor - 2  >= 0){
-        data[yCor - 1][xCor - 2] = "o";
-       }
-     }
-     if (yCor - 2 >= 0){
-       if (xCor + 1 < 8){
-        data[yCor - 2][xCor + 1] = "o";
-       }
-       if (xCor - 1  >= 0){
-        data[yCor - 2][xCor - 1] = "o";
+       if (c - 1  >= 0){
+        data[r + 2][c - 1] = "o";
        }
      }
-     data[yCor][xCor] = "x";
+     if (r - 1 >= 0){
+       if (c + 2 < cols){
+        data[r - 1][c + 2] = "o";
+       }
+       if (c - 2  >= 0){
+        data[r - 1][c - 2] = "o";
+       }
+     }
+     if (r - 2 >= 0){
+       if (c + 1 < cols){
+        data[r - 2][c + 1] = "o";
+       }
+       if (c - 1  >= 0){
+        data[r - 2][c - 1] = "o";
+       }
+     }
+     data[r][c] = "x";
    }
- 
+
 private void removeMoves(){
     for (int r; r < rows; r ++){
         for (int c; c < cols; c ++){
@@ -69,9 +69,69 @@ public boolean solve(int startingRow, int startingCol){
     return solver(startingRow,startingCol);
 }
 private boolean solver( int r, int c){
-    possibleMoves();
+    if (checker)
+    data[r][c] = "x";
+    if (r + 1 < rows ){
+      if (c + 2 < cols){
+          if (data[r + 1] [c +2].equals("x")){
+             return false;
+          }
+       return solver (r + 1, c + 2);
+      }
+      if (c - 2  >= 0){
+          if (data[r + 1] [c - 2].equals("x")){
+             return false;
+          }
+       return solver (r + 1, c - 2);
+      }
+    }
+    if (r + 2 < rows){
+      if (c + 1 < cols){
+          if (data[r + 2] [c +1].equals("x")){
+             return false;
+          }
+       return solver(r + 2,c + 1);
+      }
+      if (c - 1  >= 0){
+          if (data[r + 1] [c - 1].equals("x")){
+             return false;
+          }
+       return solver(r + 2,c - 1);
+      }
+    }
+    if (r - 1 >= 0){
+      if (c + 2 < cols){
+          if (data[r - 1] [c + 2].equals("x")){
+             return false;
+          }
+       return solver(r - 1,c + 2);
+      }
+      if (c - 2  >= 0){
+          if (data[r - 1] [c - 2].equals("x")){
+             return false;
+          }
+       return solver(r - 1,c - 2);
+      }
+    }
+    if (r - 2 >= 0){
+      if (c + 1 < cols){
+          if (data[r - 2] [c + 1].equals("x")){
+             return false;
+          }
+       return solver(r - 2,c + 1);
+      }
+      if (c - 1  >= 0){
+          if (data[r + 1] [c - 1].equals("x")){
+             return false;
+          }
+      return solver(r - 2,c - 1);
+      }
+    }
+
+  }
 // I know this is wrong but just need to write it down
-    if (data [r][c].equals("o")){
+// need a way of having a list of possible moves
+
 
     }
     removeMoves();
