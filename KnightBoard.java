@@ -69,7 +69,9 @@ public boolean solve(int startingRow, int startingCol){
     return solver(startingRow,startingCol);
 }
 private boolean solver( int r, int c){
-    if (checker)
+    if (checker()){
+        return true;
+    }
     data[r][c] = "x";
     //   __ __
     //  |
@@ -95,65 +97,59 @@ private boolean solver( int r, int c){
     //  x
     if (r + 2 < rows){
       if (c + 1 < cols){
-          if (data[r + 2] [c +1].equals("x")){
-             return false;
-          }
+          if (!(data[r + 2] [c +1].equals("x"))){
        return solver(r + 2,c + 1);
       }
+    }
       //  __
       //    |
       //    |
       //    x
       if (c - 1  >= 0){
-          if (data[r + 1] [c - 1].equals("x")){
-             return false;
-          }
+          if (!(data[r + 1] [c - 1].equals("x"))){
        return solver(r + 2,c - 1);
-      }
+        }
+        }
     }
     //  x
     //  |
     //   __ __
     if (r - 1 >= 0){
       if (c + 2 < cols){
-          if (data[r - 1] [c + 2].equals("x")){
-             return false;
-          }
+          if (!(data[r - 1] [c + 2].equals("x"))){
        return solver(r - 1,c + 2);
       }
+  }
       //        x
       //        |
       //   __ __
       if (c - 2  >= 0){
-          if (data[r - 1] [c - 2].equals("x")){
-             return false;
-          }
+          if (!(data[r - 1] [c - 2].equals("x"))){
        return solver(r - 1,c - 2);
       }
     }
+}
     //  x
     //  |
     //  |
     //   __
     if (r - 2 >= 0){
       if (c + 1 < cols){
-          if (data[r - 2] [c + 1].equals("x")){
-             return false;
-          }
-       return solver(r - 2,c + 1);
+          if (!(data[r - 2] [c + 1].equals("x"))){
+              return solver(r - 2,c + 1);
       }
+  }
       //     x
       //     |
       //     |
       //   __
       if (c - 1  >= 0){
-          if (data[r + 1] [c - 1].equals("x")){
-             return false;
-          }
+          if (!(data[r + 1] [c - 1].equals("x"))){
       return solver(r - 2,c - 1);
       }
     }
-
+    }
+    return false;
   }
 // I know this is wrong but just need to write it down
 // need a way of having a list of possible moves
