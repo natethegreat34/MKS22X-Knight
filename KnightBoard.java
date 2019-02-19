@@ -39,14 +39,14 @@ public String toString(){
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
 public boolean solve(int startingRow, int startingCol){
-    return solver(startingRow,startingCol, -1, -1);
+    return solver(startingRow,startingCol, -1, -1, 0);
 }
-private boolean solver( int r, int c, int prevr, int prevc){
+private boolean solver( int r, int c, int prevr, int prevc, int n){
     // if prevr and prevc are equal to one of the options, make it false
     if (checker()){
         num ++;
     }
-    data[r][c] = 1;
+    data[r][c] = n + 1;
     //   __ __
     //  |
     //  x
@@ -125,8 +125,8 @@ private boolean solver( int r, int c, int prevr, int prevc){
       }
     }
     }
-    data[r][c] = "_";
-    return solver(prevr, prevc, r,c);
+    data[r][c] = 0 ;
+    return solver(prevr, prevc, r,c, n - 1);
   }
 public boolean checker(){
     for (int r = 0; r < rows; r ++){
@@ -147,8 +147,4 @@ public boolean checker(){
 public int countSolutions(int startingRow, int startingCol){
     solve(startingRow, startingCol);
     return num;
-}
-private boolean solveH(int row ,int col, int moveNumber) {
-    ;
-}
 }
