@@ -22,7 +22,7 @@ public String toString(){
                 if (data [r] [c] == 0){
                     display = display + " " + "__";
                 }
-                else display = display + " " + "xx";
+                else display = display + " " + data [r] [c];
             }
             // System.out.println("life");
             display = display + "\n";
@@ -38,103 +38,89 @@ public String toString(){
 // @throws IllegalStateException when the board contains non-zero values.
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
+public boolean nomoves(int r, int c){
+    if (r < 0 || r > rows - 1 || c < 0 || c > cols - 1){
+        return true;
+    }
+    if (data [r + 1][c + 2] != 0 ||
+    data [r + 1][c - 2] != 0 ||
+    data [r + 2][c + 1] != 0 ||
+    data [r + 2][c - 1] != 0 ||
+    data [r - 1][c + 2] != 0 ||
+    data [r - 1][c - 2] != 0 ||
+    data [r - 2][c + 1] != 0 ||
+    data [r - 2][c - 1] != 0){
+        return true;
+    }
+    return false;
+    }
 public boolean solve(int startingRow, int startingCol){
-    return solver(startingRow,startingCol, -1, -1, 0);
+    return solver(startingRow,startingCol, 1);
 }
-private boolean solver( int r, int c, int prevr, int prevc, int n){
+private boolean solver( int r, int c, int n){
+    if (nomoves(r,c)){
+        data [r][c] = 0;
+        return false;
+    }
     // if prevr and prevc are equal to one of the options, make it false
+    // if the number of moves equals the area, then we are done and return true
     if (checker()){
         num ++;
+        return true;
     }
-    data[r][c] = n + 1;
+    data[r][c] = n;
+    System.out.println(toString());
     //   __ __
     //  |
     //  x
-    if (r + 1 < rows ){
-      if (c + 2 < cols){
-          if (r + 1 != prevr || c + 2 != prevc){
-          if (!(data[r + 1] [c +2]== 1)){
-              return solver (r + 1, c + 2,r,c);
-          }
-      }
-  }
+    // once the knight moves, its other options are put on hold whil it finishes
+    return solver (r + 1, c + 2, n+1) ||
+    solver(r + 1,c - 2, n+1) ||
+    solver(r + 2,c + 1, n+1) ||
+    solver(r + 2,c - 1, n+1) ||
+    solver(r - 1,c + 2, n+1) ||
+    solver(r - 1,c - 2, n+1) ||
+    solver(r - 2,c + 1, n+1) ||
+    solver(r - 2,c - 1, n+1);
+
      //   __ __
      //        |
      //        x
-      if (c - 2  >= 0){
-          if (!(data[r + 1] [c - 2]== 1)){
-              return solver (r + 1, c - 2,r,c);
-          }
-      }
-    }
+
     //   __
     //  |
     //  |
     //  x
-    if (r + 2 < rows){
-      if (c + 1 < cols){
-          if (!(data[r + 2] [c +1]== 1)){
-       return solver(r + 2,c + 1,r,c);
-      }
-    }
+
       //  __
       //    |
       //    |
       //    x
-      if (c - 1  >= 0){
-          if (!(data[r + 1] [c - 1]== 1)){
-       return solver(r + 2,c - 1,r,c);
-        }
-        }
-    }
+
     //  x
     //  |
     //   __ __
-    if (r - 1 >= 0){
-      if (c + 2 < cols){
-          if (!(data[r - 1] [c + 2]== 1)){
-       return solver(r - 1,c + 2,r,c);
-      }
-  }
+
       //        x
       //        |
       //   __ __
-      if (c - 2  >= 0){
-          if (!(data[r - 1] [c - 2]== 1)){
-       return solver(r - 1,c - 2,r,c);
-      }
-    }
-}
+
     //  x
     //  |
     //  |
     //   __
-    if (r - 2 >= 0){
-      if (c + 1 < cols){
-          if (!(data[r - 2] [c + 1]== 1)){
-              return solver(r - 2,c + 1,r,c);
-      }
-  }
+
       //     x
       //     |
       //     |
       //   __
-      if (c - 1  >= 0){
-          if (!(data[r + 1] [c - 1]== 1)){
-      return solver(r - 2,c - 1,r,c);
-      }
-    }
-    }
-    data[r][c] = 0 ;
-    return solver(prevr, prevc, r,c, n - 1);
   }
 public boolean checker(){
     for (int r = 0; r < rows; r ++){
         for (int c = 0; c < cols; c ++){
-            if (data [r] [c]== 1){
-                ;
+            if (data [r] [c] == 0){
+                return false;
             }
-            else return false;
         }
     }
     return true;
@@ -147,4 +133,5 @@ public boolean checker(){
 public int countSolutions(int startingRow, int startingCol){
     solve(startingRow, startingCol);
     return num;
+}
 }
