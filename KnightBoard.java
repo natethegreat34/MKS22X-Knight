@@ -39,25 +39,95 @@ public String toString(){
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
 public boolean nomoves(int r, int c){
-    if (r < 0 || r > rows - 1 || c < 0 || c > cols - 1){
-        return true;
+        //   __ __
+    //  |
+    //  x
+    if (r + 1 < rows ){
+      if (c + 2 < cols){
+          if (data[r + 1] [c +2] == 0){
+              return false;
+          }
+      }
+     //   __ __
+     //        |
+     //        x
+      if (c - 2  >= 0){
+          if (data[r + 1] [c - 2] == 0){
+              return false;
+          }
+      }
+  }
+    //   __
+    //  |
+    //  |
+    //  x
+    if (r + 2 < rows){
+      if (c + 1 < cols){
+          if (data[r + 2] [c +1] == 0){
+              return false;
+          }
+      }
+      //  __
+      //    |
+      //    |
+      //    x
+      if (c - 1  >= 0){
+          if (data[r + 1] [c - 1] == 0){
+              return false;
+          }
+      }
     }
-    if (data [r + 1][c + 2] != 0 ||
-    data [r + 1][c - 2] != 0 ||
-    data [r + 2][c + 1] != 0 ||
-    data [r + 2][c - 1] != 0 ||
-    data [r - 1][c + 2] != 0 ||
-    data [r - 1][c - 2] != 0 ||
-    data [r - 2][c + 1] != 0 ||
-    data [r - 2][c - 1] != 0){
-        return true;
+    //  x
+    //  |
+    //   __ __
+    if (r - 1 >= 0){
+      if (c + 2 < cols){
+          if (data[r - 1] [c + 2] == 0){
+              return false;
+          }
+      }
+      //        x
+      //        |
+      //   __ __
+      if (c - 2  >= 0){
+          if (data[r - 1] [c - 2] == 0){
+              return false;
+          }
+        }
     }
-    return false;
-    }
+    //  x
+    //  |
+    //  |
+    //   __
+    if (r - 2 >= 0){
+      if (c + 1 < cols){
+          if ( data[r - 2] [c + 1] == 0){
+              return false;
+          }
+      }
+      //     x
+      //     |
+      //     |
+      //   __
+      if (c - 1  >= 0){
+          if (data[r + 1] [c - 1] == 0){
+              return false;
+          }
+      }
+  }
+    return true;
+}
+
 public boolean solve(int startingRow, int startingCol){
     return solver(startingRow,startingCol, 1);
 }
 private boolean solver( int r, int c, int n){
+    if (r < 0 || r > rows - 1 || c < 0 || c > cols - 1){
+        return false;
+    }
+    if (data [r][c] != 0){
+        return false;
+    }
     if (nomoves(r,c)){
         data [r][c] = 0;
         return false;
@@ -70,10 +140,7 @@ private boolean solver( int r, int c, int n){
     }
     data[r][c] = n;
     System.out.println(toString());
-    //   __ __
-    //  |
-    //  x
-    // once the knight moves, its other options are put on hold whil it finishes
+    // once the knight moves, its other options are put on hold while it finishes
     return solver (r + 1, c + 2, n+1) ||
     solver(r + 1,c - 2, n+1) ||
     solver(r + 2,c + 1, n+1) ||
@@ -83,37 +150,6 @@ private boolean solver( int r, int c, int n){
     solver(r - 2,c + 1, n+1) ||
     solver(r - 2,c - 1, n+1);
 
-     //   __ __
-     //        |
-     //        x
-
-    //   __
-    //  |
-    //  |
-    //  x
-
-      //  __
-      //    |
-      //    |
-      //    x
-
-    //  x
-    //  |
-    //   __ __
-
-      //        x
-      //        |
-      //   __ __
-
-    //  x
-    //  |
-    //  |
-    //   __
-
-      //     x
-      //     |
-      //     |
-      //   __
   }
 public boolean checker(){
     for (int r = 0; r < rows; r ++){
