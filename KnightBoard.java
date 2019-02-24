@@ -13,6 +13,7 @@ public class KnightBoard {
 
 
 public String toString(){
+    int i = 0;
     String display = "";
     // System.out.println(data.length);
     for (int r = 0; r < data.length; r ++){
@@ -20,9 +21,10 @@ public String toString(){
         for (int c = 0; c < data [0].length; c ++){
             // System.out.println("hello??");
                 if (data [r] [c] == 0){
-                    display = display + " " + "__";
+                    display = display + " " + "_";
                 }
-                else display = display + " " + data [r] [c];
+                else display = display + " " + data [r][c];
+                i ++;
             }
             // System.out.println("life");
             display = display + "\n";
@@ -72,7 +74,7 @@ public boolean nomoves(int r, int c){
       //    |
       //    x
       if (c - 1  >= 0){
-          if (data[r + 1] [c - 1] == 0){
+          if (data[r + 2] [c - 1] == 0){
               return false;
           }
       }
@@ -110,7 +112,7 @@ public boolean nomoves(int r, int c){
       //     |
       //   __
       if (c - 1  >= 0){
-          if (data[r + 1] [c - 1] == 0){
+          if (data[r - 2] [c - 1] == 0){
               return false;
           }
       }
@@ -128,18 +130,23 @@ private boolean solver( int r, int c, int n){
     if (data [r][c] != 0){
         return false;
     }
-    if (nomoves(r,c)){
-        data [r][c] = 0;
-        return false;
-    }
-    // if prevr and prevc are equal to one of the options, make it false
-    // if the number of moves equals the area, then we are done and return true
+    System.out.println(nomoves(r,c));
     if (checker()){
         num ++;
+        System.out.println("UFFBKSBDFDJSBFJDSBFKU");
         return true;
     }
-    data[r][c] = n;
-    System.out.println(toString());
+    if (nomoves(r,c)){
+        data [r][c] = 0;
+        // System.out.println("YGDGIYDGFIYVZSFIVDSGUFVAGYSVFHAVFGHDAVFHDVFUVFUGDVFKHGVFKGHVDKGHVFGUVDFUKVDDVYKEVK" + "\n" + data);
+        return false;
+}
+    // if prevr and prevc are equal to one of the options, make it false
+    // if the number of moves equals the area, then we are done and return true
+
+    if (addKnight(r,c)){
+    data[r][c] = 1;
+}
     // once the knight moves, its other options are put on hold while it finishes
     return solver (r + 1, c + 2, n+1) ||
     solver(r + 1,c - 2, n+1) ||
