@@ -11,6 +11,12 @@ public class KnightBoard {
     }
 //Initialize the board to the correct size and make them all 0's
 
+private boolean addKnight(int r, int c){
+    if (data [r] [c] != 0) {
+        return false;
+    }
+    return true;
+}
 
 public String toString(){
     int i = 0;
@@ -131,6 +137,9 @@ private boolean solver( int r, int c, int n){
         return false;
     }
     System.out.println(nomoves(r,c));
+    if (addKnight(r,c)){
+    data[r][c] = 1;
+}
     if (checker()){
         num ++;
         System.out.println("UFFBKSBDFDJSBFJDSBFKU");
@@ -144,9 +153,7 @@ private boolean solver( int r, int c, int n){
     // if prevr and prevc are equal to one of the options, make it false
     // if the number of moves equals the area, then we are done and return true
 
-    if (addKnight(r,c)){
-    data[r][c] = 1;
-}
+
     // once the knight moves, its other options are put on hold while it finishes
     return solver (r + 1, c + 2, n+1) ||
     solver(r + 1,c - 2, n+1) ||
