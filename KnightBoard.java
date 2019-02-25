@@ -127,44 +127,49 @@ public boolean nomoves(int r, int c){
 }
 
 public boolean solve(int startingRow, int startingCol){
-    return solver(startingRow,startingCol, 1);
-}
-private boolean solver( int r, int c, int n){
-    if (r < 0 || r > rows - 1 || c < 0 || c > cols - 1){
-        return false;
-    }
-    if (data [r][c] != 0){
-        return false;
-    }
-    System.out.println(nomoves(r,c));
-    if (addKnight(r,c)){
-    data[r][c] = 1;
-}
-    if (checker()){
-        num ++;
-        System.out.println("UFFBKSBDFDJSBFJDSBFKU");
+    solver(startingRow,startingCol, 1);
+    if (num > 0){
         return true;
     }
-    if (nomoves(r,c)){
-        data [r][c] = 0;
-        // System.out.println("YGDGIYDGFIYVZSFIVDSGUFVAGYSVFHAVFGHDAVFHDVFUVFUGDVFKHGVFKGHVDKGHVFGUVDFUKVDDVYKEVK" + "\n" + data);
-        return false;
+    return false;
 }
+private void solver( int r, int c, int n){
+    if (r < 0 || r > rows - 1 || c < 0 || c > cols - 1){
+        // System.out.println("uisfjhbfkdsbk");;
+    }
+    else if (data [r][c] != 0){
+        // System.out.println("ppop");
+    }
+    // System.out.println(nomoves(r,c));
+
+
+
+        // System.out.println("YGDGIYDGFIYVZSFIVDSGUFVAGYSVFHAVFGHDAVFHDVFUVFUGDVFKHGVFKGHVDKGHVFGUVDFUKVDDVYKEVK" + "\n" + data);
     // if prevr and prevc are equal to one of the options, make it false
     // if the number of moves equals the area, then we are done and return true
 
 
     // once the knight moves, its other options are put on hold while it finishes
-    return solver (r + 1, c + 2, n+1) ||
-    solver(r + 1,c - 2, n+1) ||
-    solver(r + 2,c + 1, n+1) ||
-    solver(r + 2,c - 1, n+1) ||
-    solver(r - 1,c + 2, n+1) ||
-    solver(r - 1,c - 2, n+1) ||
-    solver(r - 2,c + 1, n+1) ||
+    else if(addKnight(r,c)){
+    data[r][c] = 1;
+    if (checker()){
+        num ++;
+        // System.out.println("UFFBKSBDFDJSBFJDSBFKU");
+    }
+    else{
+    // System.out.println("kokokoko");
+    solver(r + 1, c + 2, n+1);
+    solver(r + 1,c - 2, n+1);
+    solver(r + 2,c + 1, n+1);
+    solver(r + 2,c - 1, n+1);
+    solver(r - 1,c + 2, n+1);
+    solver(r - 1,c - 2, n+1);
+    solver(r - 2,c + 1, n+1);
     solver(r - 2,c - 1, n+1);
-
-  }
+}data [r][c] = 0;
+  
+}
+}
 public boolean checker(){
     for (int r = 0; r < rows; r ++){
         for (int c = 0; c < cols; c ++){
