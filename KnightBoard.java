@@ -16,6 +16,86 @@ private void preview (){
         for (int c = 0; c < data [0].length; c ++){
             data [r] [c] = nmoves(r, c);
 }
+}
+}
+
+public int nmoves(int r, int c){
+    int n = 0;
+    if (r + 1 < rows ){
+      if (c + 2 < cols){
+          if (data[r + 1] [c +2] != -1){
+              n ++;
+          }
+      }
+     //   __ __
+     //        |
+     //        x
+      if (c - 2  >= 0){
+          if (data[r + 1] [c - 2] != -1){
+              n ++;
+          }
+      }
+    }
+    //   __
+    //  |
+    //  |
+    //  x
+    if (r + 2 < rows){
+      if (c + 1 < cols){
+          if (data[r + 2] [c +1] != -1){
+              n ++;
+          }
+      }
+      //  __
+      //    |
+      //    |
+      //    x
+      if (c - 1  >= 0){
+          if (data[r + 2] [c - 1] != -1){
+              n ++;
+          }
+      }
+    }
+    //  x
+    //  |
+    //   __ __
+    if (r - 1 >= 0){
+      if (c + 2 < cols){
+          if (data[r - 1] [c + 2] != -1){
+              n ++;
+          }
+      }
+      //        x
+      //        |
+      //   __ __
+      if (c - 2  >= 0){
+          if (data[r - 1] [c - 2] != -1){
+              n ++;
+          }
+        }
+    }
+    //  x
+    //  |
+    //  |
+    //   __
+    if (r - 2 >= 0){
+      if (c + 1 < cols){
+          if ( data[r - 2] [c + 1] != -1){
+              n ++;
+          }
+      }
+      //     x
+      //     |
+      //     |
+      //   __
+      if (c - 1  >= 0){
+          if (data[r - 2] [c - 1] != -1){
+              n ++;
+          }
+      }
+    }
+    return n;
+    }
 private boolean addKnight(int r, int c){
     if (data [r] [c] != 0) {
         return false;
@@ -132,6 +212,7 @@ public boolean nomoves(int r, int c){
 }
 
 public boolean solve(int startingRow, int startingCol){
+    preview();
     solver(startingRow,startingCol, 1);
     if (num > 0){
         return true;
