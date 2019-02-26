@@ -11,6 +11,11 @@ public class KnightBoard {
     }
 //Initialize the board to the correct size and make them all 0's
 
+private void preview (){
+    for (int r = 0; r < data.length; r ++){
+        for (int c = 0; c < data [0].length; c ++){
+            data [r] [c] = nmoves(r, c);
+}
 private boolean addKnight(int r, int c){
     if (data [r] [c] != 0) {
         return false;
@@ -167,7 +172,7 @@ private void solver( int r, int c, int n){
     solver(r - 2,c + 1, n+1);
     solver(r - 2,c - 1, n+1);
 }data [r][c] = 0;
-  
+
 }
 }
 public boolean checker(){
