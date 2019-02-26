@@ -4,6 +4,7 @@ public class KnightBoard {
     private int num;
     private int [][] data;
     public KnightBoard (int startingRows,int startingCols){
+        int [] grand = new int [2];
         rows = startingRows;
         cols = startingCols;
         data = new int [rows] [cols];
@@ -210,7 +211,119 @@ public boolean nomoves(int r, int c){
   }
     return true;
 }
-
+private void leastnmove(int r,int c){
+    int x = 0;
+    int y = 0;
+    int m = 0;
+    //   __ __
+//  |
+//  x
+if (r + 1 < rows ){
+  if (c + 2 < cols){
+      if (data[r + 1] [c +2] != -1){
+          m = data[r + 1] [c +2];
+          x = r + 1;
+          y = c + 2;
+      }
+  }
+ //   __ __
+ //        |
+ //        x
+  if (c - 2  >= 0){
+      if (data[r + 1] [c - 2] != -1){
+          if (data[r + 1] [c - 2] < m){
+              m = data[r + 1] [c - 2];
+              x = r + 1;
+              y = c -  2;
+          }
+      }
+  }
+}
+//   __
+//  |
+//  |
+//  x
+if (r + 2 < rows){
+  if (c + 1 < cols){
+      if (data[r + 2] [c +1] != -1){
+          if(data [r + 2] [c + 1] < m){
+              m = data[r + 2] [c +1];
+              x = r + 2;
+              y = c + 1;
+          }
+      }
+  }
+  //  __
+  //    |
+  //    |
+  //    x
+  if (c - 1  >= 0){
+      if (data[r + 2] [c - 1] != -1){
+          if(data [r + 2] [c - 1]< m){
+              m = data[r + 2] [c - 1];
+              x = r + 2;
+              y = c - 1;
+          }
+    }
+    }
+    }
+//  x
+//  |
+//   __ __
+if (r - 1 >= 0){
+  if (c + 2 < cols){
+      if (data[r - 1] [c + 2] != -1){
+          if (data [r - 1] [c + 2] < m){
+              m = data[r - 1] [c +2];
+              x = r - 1;
+              y = c + 2;
+          }
+          m ++;
+      }
+  }
+  //        x
+  //        |
+  //   __ __
+  if (c - 2  >= 0){
+      if (data[r - 1] [c - 2] != -1){
+          if(data [r - 1] [c - 2]< m){
+              m = data[r - 1] [c - 2];
+              x = r - 1;
+              y = c - 2;
+          }
+    }
+}
+}
+//  x
+//  |
+//  |
+//   __
+if (r - 2 >= 0){
+  if (c + 1 < cols){
+      if ( data[r - 2] [c + 1] == 0){
+          if (data [r - 2] [c + 1] < m);
+          m = data[r - 2] [c + 1];
+          x = r - 2;
+          y = c + 1;
+      }
+  }
+  //     x
+  //     |
+  //     |
+  //   __
+  if (c - 1  >= 0){
+      if (data[r - 2] [c - 1] == 0){
+         if(data [r -2] [c - 1] < m){
+          m = data[r -2] [c - 1];
+          x = r -2;
+          y = c - 1;
+      }
+  }
+}
+}
+grand [0] = x;
+grand [1] = y;
+}
 public boolean solve(int startingRow, int startingCol){
     preview();
     solver(startingRow,startingCol, 1);
@@ -243,15 +356,9 @@ private void solver( int r, int c, int n){
         // System.out.println("UFFBKSBDFDJSBFJDSBFKU");
     }
     else{
+        leastnmove(r,c);
     // System.out.println("kokokoko");
-    solver(r + 1, c + 2, n+1);
-    solver(r + 1,c - 2, n+1);
-    solver(r + 2,c + 1, n+1);
-    solver(r + 2,c - 1, n+1);
-    solver(r - 1,c + 2, n+1);
-    solver(r - 1,c - 2, n+1);
-    solver(r - 2,c + 1, n+1);
-    solver(r - 2,c - 1, n+1);
+    solver(grand[0], grand[1], n +1);
 }data [r][c] = 0;
 
 }
