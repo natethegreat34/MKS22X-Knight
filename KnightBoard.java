@@ -2,24 +2,37 @@ public class KnightBoard {
     private int rows;
     private int cols;
     private int num;
+    private int [] grand;
     private int [][] data;
+    private int o;
     public KnightBoard (int startingRows,int startingCols){
-        int [] grand = new int [2];
+        grand = new int [2];
         rows = startingRows;
         cols = startingCols;
         data = new int [rows] [cols];
         // System.out.println(startingRows);
     }
 //Initialize the board to the correct size and make them all 0's
-
+//         /
+//        /
+//       /
+// \    /
+//  \  /
+//   v
 private void preview (){
     for (int r = 0; r < data.length; r ++){
         for (int c = 0; c < data [0].length; c ++){
             data [r] [c] = nmoves(r, c);
+            // System.out.println(data [r] [c]);
 }
 }
 }
-
+//         /
+//        /
+//       /
+// \    /
+//  \  /
+//   v
 public int nmoves(int r, int c){
     int n = 0;
     if (r + 1 < rows ){
@@ -98,7 +111,7 @@ public int nmoves(int r, int c){
     return n;
     }
 private boolean addKnight(int r, int c){
-    if (data [r] [c] != 0) {
+    if (data [r] [c] == -1) {
         return false;
     }
     return true;
@@ -109,20 +122,20 @@ public String toString(){
     String display = "";
     // System.out.println(data.length);
     for (int r = 0; r < data.length; r ++){
-        // System.out.println("ppodle");
         for (int c = 0; c < data [0].length; c ++){
             // System.out.println("hello??");
-                if (data [r] [c] == 0){
-                    display = display + " " + "_";
-                }
-                else display = display + " " + data [r][c];
-                i ++;
-            }
+                // if (data [r] [c] == 0){
+                    display = display + " " + data [r] [c];
+            //     }
+            //     else display = display + " " + data [r][c];
+            //     i ++;
+             }
             // System.out.println("life");
             display = display + "\n";
     }
     return display;
-  }
+
+}
 
 // see format for toString below
 // blank boards display 0's as underscores
@@ -132,6 +145,83 @@ public String toString(){
 // @throws IllegalStateException when the board contains non-zero values.
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
+public void update(int r,int c){
+    int n = 0;
+    if (r + 1 < rows ){
+      if (c + 2 < cols){
+          if (data[r + 1] [c +2] != -1){
+              data[r + 1] [c +2] --;
+          }
+      }
+     //   __ __
+     //        |
+     //        x
+      if (c - 2  >= 0){
+          if (data[r + 1] [c - 2] != -1){
+              data[r + 1] [c - 2] --;
+          }
+      }
+    }
+    //   __
+    //  |
+    //  |
+    //  x
+    if (r + 2 < rows){
+      if (c + 1 < cols){
+          if (data[r + 2] [c +1] != -1){
+              data[r + 2] [c +1] --;
+          }
+      }
+      //  __
+      //    |
+      //    |
+      //    x
+      if (c - 1  >= 0){
+          if (data[r + 2] [c - 1] != -1){
+              data[r + 2] [c - 1] --;
+          }
+      }
+    }
+    //  x
+    //  |
+    //   __ __
+    if (r - 1 >= 0){
+      if (c + 2 < cols){
+          if (data[r - 1] [c + 2] != -1){
+              data[r - 1] [c + 2] --;
+          }
+      }
+      //        x
+      //        |
+      //   __ __
+      if (c - 2  >= 0){
+          if (data[r - 1] [c - 2] != -1){
+              data[r - 1] [c - 2] --;
+          }
+        }
+    }
+    //  x
+    //  |
+    //  |
+    //   __
+    if (r - 2 >= 0){
+      if (c + 1 < cols){
+          if ( data[r - 2] [c + 1] != -1){
+              data[r - 2] [c + 1] --;
+          }
+      }
+      //     x
+      //     |
+      //     |
+      //   __
+      if (c - 1  >= 0){
+          if (data[r - 2] [c - 1] != -1){
+              data[r - 2] [c - 1] --;
+          }
+      }
+
+    }
+}
 public boolean nomoves(int r, int c){
         //   __ __
     //  |
@@ -326,19 +416,22 @@ grand [1] = y;
 }
 public boolean solve(int startingRow, int startingCol){
     preview();
-    solver(startingRow,startingCol, 1);
+    // System.out.println(data.toString());
+    solver(startingRow,startingCol);
     if (num > 0){
         return true;
     }
     return false;
 }
-private void solver( int r, int c, int n){
+private void solver( int r, int c){
+    System.out.println("ko");
     if (r < 0 || r > rows - 1 || c < 0 || c > cols - 1){
-        // System.out.println("uisfjhbfkdsbk");;
+        System.out.println("uisfjhbfkdsbk");;
     }
-    else if (data [r][c] != 0){
-        // System.out.println("ppop");
+    else if (data [r][c] == -1){
+    ;
     }
+
     // System.out.println(nomoves(r,c));
 
 
@@ -350,23 +443,29 @@ private void solver( int r, int c, int n){
 
     // once the knight moves, its other options are put on hold while it finishes
     else if(addKnight(r,c)){
-    data[r][c] = 1;
+        System.out.println("uisfjhbfkdsbk");
+        o = data[r][c];
+    data[r][c] = - 1;
+    System.out.println(this.toString());
+    update(r,c);
+        System.out.println(this.toString());
     if (checker()){
         num ++;
         // System.out.println("UFFBKSBDFDJSBFJDSBFKU");
     }
     else{
         leastnmove(r,c);
-    // System.out.println("kokokoko");
-    solver(grand[0], grand[1], n +1);
-}data [r][c] = 0;
-
+    System.out.println("kokokoko");
+    solver(grand[0], grand[1]);
+}
+System.out.println("kokok");
+data[r][c] = o;
 }
 }
 public boolean checker(){
     for (int r = 0; r < rows; r ++){
         for (int c = 0; c < cols; c ++){
-            if (data [r] [c] == 0){
+            if (data [r] [c] != -1){
                 return false;
             }
         }
