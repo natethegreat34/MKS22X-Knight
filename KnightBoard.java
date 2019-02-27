@@ -305,9 +305,14 @@ public boolean nomoves(int r, int c){
     return true;
 }
 private void leastnmove(int r,int c){
-    int m = 0;
-    int x = 0;
-    int y = 0;
+    int [] a = new int [3];
+    int [] b = new int [3];
+    int [] c = new int [3];
+    int [] d = new int [3];
+    int [] e = new int [3];
+    int [] f = new int [3];
+    int [] g = new int [3];
+    int [] h = new int [3];
 
 //   __ __
 //  |
@@ -315,9 +320,10 @@ private void leastnmove(int r,int c){
 if (r + 1 < rows ){
   if (c + 2 < cols){
       if (data[r + 1] [c +2] != -1){
-          yes.add(data[r + 1] [c +2]);
-          x = r + 1;
-          y = c + 2;
+          a[0] = data[r + 1] [c +2];
+          a[1] = r + 1;
+          a[2] = c + 2;
+          yes.add(a);
       }
   }
  //   __ __
@@ -326,9 +332,10 @@ if (r + 1 < rows ){
   if (c - 2  >= 0){
       if (data[r + 1] [c - 2] != -1){
           if (data[r + 1] [c - 2] < m){
-              yes.add(data[r + 1] [c - 2]);
-              x = r + 1;
-              y = c -  2;
+              b[0] = data[r + 1] [c - 2];
+              b[1] = r + 1;
+              b[2] = c -  2;
+              yes.add(b);
           }
       }
   }
@@ -341,9 +348,10 @@ if (r + 2 < rows){
   if (c + 1 < cols){
       if (data[r + 2] [c +1] != -1){
           if(data [r + 2] [c + 1] < m){
-             yes.add(data[r + 2] [c +1]);
-              x = r + 2;
-              y = c + 1;
+             c[0] = data[r + 2] [c +1];
+              c[1] = r + 2;
+              c[3] = c + 1;
+              yes.add(c);
           }
       }
   }
@@ -354,9 +362,10 @@ if (r + 2 < rows){
   if (c - 1  >= 0){
       if (data[r + 2] [c - 1] != -1){
           if(data [r + 2] [c - 1]< m){
-              yes.add(data[r + 2] [c - 1]);
-              x = r + 2;
-              y = c - 1;
+              d[0]= data[r + 2] [c - 1];
+              d[1] = r + 2;
+              d[2] = c - 1;
+              yes.add(d);
           }
     }
     }
@@ -368,9 +377,10 @@ if (r - 1 >= 0){
   if (c + 2 < cols){
       if (data[r - 1] [c + 2] != -1){
           if (data [r - 1] [c + 2] < m){
-              yes.add(data[r - 1] [c +2]);
-              x = r - 1;
-              y = c + 2;
+              e[0] = data[r - 1] [c +2];
+              e[1]= r - 1;
+              e[2] = c + 2;
+              yes.add(e);
           }
           m ++;
       }
@@ -381,9 +391,10 @@ if (r - 1 >= 0){
   if (c - 2  >= 0){
       if (data[r - 1] [c - 2] != -1){
           if(data [r - 1] [c - 2]< m){
-              yes.add(data[r - 1] [c - 2]);
-              x = r - 1;
-              y = c - 2;
+              f[0] = data[r - 1] [c - 2];
+              f[1] = r - 1;
+              f[2] = c - 2;
+              yes.add(f);
           }
     }
 }
@@ -396,9 +407,10 @@ if (r - 2 >= 0){
   if (c + 1 < cols){
       if ( data[r - 2] [c + 1] == 0){
           if (data [r - 2] [c + 1] < m);
-          yes.add(data[r - 2] [c + 1]);
-          x = r - 2;
-          y = c + 1;
+          g[0] = data[r - 2] [c + 1];
+          g[1] = r - 2;
+          g[2] = c + 1;
+          yes.add(g);
       }
   }
   //     x
@@ -408,9 +420,10 @@ if (r - 2 >= 0){
   if (c - 1  >= 0){
       if (data[r - 2] [c - 1] == 0){
          if(data [r -2] [c - 1] < m){
-          yes.add(data[r -2] [c - 1]);
-          x = r -2;
-          y = c - 1;
+          h[0] = data[r -2] [c - 1];
+          h[1] = r -2;
+          h[2] = c - 1;
+          yes.add(h);
       }
   }
 }
