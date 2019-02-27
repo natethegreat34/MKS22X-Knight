@@ -1,3 +1,4 @@
+import java.util.*;
 public class KnightBoard {
     private int rows;
     private int cols;
@@ -10,7 +11,94 @@ public class KnightBoard {
         // System.out.println(startingRows);
     }
 //Initialize the board to the correct size and make them all 0's
-
+private void preview (){
+    for (int r = 0; r < data.length; r ++){
+        for (int c = 0; c < data [0].length; c ++){
+            data [r] [c] = nmoves(r, c);
+            // System.out.println(data [r] [c]);
+}
+}
+}
+public int nmoves(int r, int c){
+    int n = 0;
+    // System.out.println(c);
+    // System.out.println(r);
+    // System.out.println(this);
+    if (r + 1 < rows && r + 1 >=0){
+      if (c + 2 < cols && c + 2 >=0){
+          if (data[r + 1] [c +2] == 0){
+              n ++;
+          }
+      }
+     //   __ __
+     //        |
+     //        x
+      if (c - 2  >= 0 && c - 2 < cols){
+          if (data[r + 1] [c - 2] == 0){
+              n ++;
+          }
+      }
+    }
+    //   __
+    //  |
+    //  |
+    //  x
+    if (r + 2 < rows && r + 2 >=0){
+      if (c + 1 < cols && c+ 1 >=0){
+          if (data[r + 2] [c +1] == 0){
+              n ++;
+          }
+      }
+      //  __
+      //    |
+      //    |
+      //    x
+      if (c - 1  >= 0 && c -1  < cols){
+          if (data[r + 2] [c - 1] == 0){
+              n ++;
+          }
+      }
+    }
+    //  x
+    //  |
+    //   __ __
+    if (r - 1 >= 0 && r - 1 < rows){
+      if (c + 2 < cols && c + 2 >=0){
+          if (data[r - 1] [c + 2] == 0){
+              n ++;
+          }
+      }
+      //        x
+      //        |
+      //   __ __
+      if (c - 2  >= 0 && c - 2 < cols){
+          if (data[r - 1] [c - 2] == 0){
+              n ++;
+          }
+        }
+    }
+    //  x
+    //  |
+    //  |
+    //   __
+    if (r - 2 >= 0 && r -2 < rows){
+      if (c + 1 < cols && c + 1 >=0){
+          if ( data[r - 2] [c + 1] == 0){
+              n ++;
+          }
+      }
+      //     x
+      //     |
+      //     |
+      //   __
+      if (c - 1  >= 0 && c - 1 < cols){
+          if (data[r - 2] [c - 1] == 0){
+              n ++;
+          }
+      }
+    }
+    return n;
+    }
 private boolean addKnight(int r, int c){
     if (data [r] [c] != 0) {
         return false;
@@ -47,14 +135,16 @@ public String toString(){
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
 private ArrayList <Place> generatemoves(int r, int c){
-    ArrayList <Place>  moves = new ArrayList <Place> ();
+    ArrayList <Place> moves = new ArrayList <Place> ();
         //   __ __
     //  |
     //  x
     if (r + 1 < rows ){
       if (c + 2 < cols){
           if (data[r + 1] [c +2] == 0){
-              moves.add(new Place(r+1, c+2));
+              Place p = new Place(r+1, c+2);
+              p.setp(nmoves(r+1, c+2));
+              moves.add(p);
           }
       }
      //   __ __
@@ -62,7 +152,9 @@ private ArrayList <Place> generatemoves(int r, int c){
      //        x
       if (c - 2  >= 0){
           if (data[r + 1] [c - 2] == 0){
-              moves.add(new Place(r+1, c-2));
+              Place p = new Place(r+1, c-2);
+              p.setp(nmoves(r+1, c-2));
+              moves.add(p);
           }
       }
   }
@@ -73,7 +165,9 @@ private ArrayList <Place> generatemoves(int r, int c){
     if (r + 2 < rows){
       if (c + 1 < cols){
           if (data[r + 2] [c +1] == 0){
-              moves.add(new Place(r+2, c+1));
+              Place p = new Place(r+2, c+1);
+              p.setp(nmoves(r+2, c+1));
+              moves.add(p);
           }
       }
       //  __
@@ -82,7 +176,9 @@ private ArrayList <Place> generatemoves(int r, int c){
       //    x
       if (c - 1  >= 0){
           if (data[r + 2] [c - 1] == 0){
-              moves.add(new Place(r+2, c-1));
+              Place p = new Place(r+2, c-1);
+              p.setp(nmoves(r+2, c-1));
+              moves.add(p);
           }
       }
     }
@@ -92,7 +188,9 @@ private ArrayList <Place> generatemoves(int r, int c){
     if (r - 1 >= 0){
       if (c + 2 < cols){
           if (data[r - 1] [c + 2] == 0){
-              moves.add(new Place(r-1, c+2));
+              Place p = new Place(r-1, c+2);
+              p.setp(nmoves(r-1, c+2));
+              moves.add(p);
           }
       }
       //        x
@@ -100,7 +198,9 @@ private ArrayList <Place> generatemoves(int r, int c){
       //   __ __
       if (c - 2  >= 0){
           if (data[r - 1] [c - 2] == 0){
-              moves.add(new Place(r-1, c-2));
+              Place p = new Place(r-1, c-2);
+              p.setp(nmoves(r-1, c-2));
+              moves.add(p);
           }
         }
     }
@@ -111,7 +211,9 @@ private ArrayList <Place> generatemoves(int r, int c){
     if (r - 2 >= 0){
       if (c + 1 < cols){
           if ( data[r - 2] [c + 1] == 0){
-              moves.add(new Place(r-2, c+1));
+              Place p = new Place(r-2, c+1);
+              p.setp(nmoves(r-2, c+1));
+              moves.add(p);
           }
       }
       //     x
@@ -120,11 +222,14 @@ private ArrayList <Place> generatemoves(int r, int c){
       //   __
       if (c - 1  >= 0){
           if (data[r - 2] [c - 1] == 0){
-              moves.add(new Place(r-2, c-1));
+              Place p = new Place(r-2, c+2);
+              p.setp(nmoves(r-2, c+2));
+              moves.add(p);
           }
       }
   }
-    return true;
+    Collections.sort(moves);
+    return moves;
 }
 public boolean nomoves(int r, int c){
         //   __ __
@@ -215,7 +320,7 @@ public boolean solve(int startingRow, int startingCol){
 }
 private void solver( int r, int c, int n){
     if (r < 0 || r > rows - 1 || c < 0 || c > cols - 1){
-        // System.out.println("uisfjhbfkdsbk");;
+        // em.out.println("uisfjhbfkdsbk");;
     }
     else if (data [r][c] != 0){
         // System.out.println("ppop");
@@ -237,15 +342,10 @@ private void solver( int r, int c, int n){
         // System.out.println("UFFBKSBDFDJSBFJDSBFKU");
     }
     else{
+        ArrayList <Place> moves = generatemoves(r,c);
     // System.out.println("kokokoko");
-    solver(r + 1, c + 2, n+1);
-    solver(r + 1,c - 2, n+1);
-    solver(r + 2,c + 1, n+1);
-    solver(r + 2,c - 1, n+1);
-    solver(r - 1,c + 2, n+1);
-    solver(r - 1,c - 2, n+1);
-    solver(r - 2,c + 1, n+1);
-    solver(r - 2,c - 1, n+1);
+    for (int i = 0; i < moves.size(); i ++)
+        solver (moves.get(i).getrow(), moves.get(i).getcol(), n +1);
 }data [r][c] = 0;
 
 }
