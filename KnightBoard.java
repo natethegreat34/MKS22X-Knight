@@ -307,7 +307,7 @@ public boolean nomoves(int r, int c){
 private void leastnmove(int r,int c){
     int [] a = new int [3];
     int [] b = new int [3];
-    int [] c = new int [3];
+    int [] q = new int [3];
     int [] d = new int [3];
     int [] e = new int [3];
     int [] f = new int [3];
@@ -319,24 +319,22 @@ private void leastnmove(int r,int c){
 //  x
 if (r + 1 < rows ){
   if (c + 2 < cols){
-      if (data[r + 1] [c +2] != -1){
           a[0] = data[r + 1] [c +2];
           a[1] = r + 1;
           a[2] = c + 2;
           yes.add(a);
-      }
+
   }
  //   __ __
  //        |
  //        x
   if (c - 2  >= 0){
       if (data[r + 1] [c - 2] != -1){
-          if (data[r + 1] [c - 2] < m){
               b[0] = data[r + 1] [c - 2];
               b[1] = r + 1;
               b[2] = c -  2;
               yes.add(b);
-          }
+
       }
   }
 }
@@ -347,12 +345,11 @@ if (r + 1 < rows ){
 if (r + 2 < rows){
   if (c + 1 < cols){
       if (data[r + 2] [c +1] != -1){
-          if(data [r + 2] [c + 1] < m){
-             c[0] = data[r + 2] [c +1];
-              c[1] = r + 2;
-              c[3] = c + 1;
-              yes.add(c);
-          }
+             q[0] = data[r + 2] [c +1];
+              q[1] = r + 2;
+              q[2] = c + 1;
+              yes.add(q);
+
       }
   }
   //  __
@@ -361,13 +358,12 @@ if (r + 2 < rows){
   //    x
   if (c - 1  >= 0){
       if (data[r + 2] [c - 1] != -1){
-          if(data [r + 2] [c - 1]< m){
               d[0]= data[r + 2] [c - 1];
               d[1] = r + 2;
               d[2] = c - 1;
               yes.add(d);
           }
-    }
+
     }
     }
 //  x
@@ -376,13 +372,11 @@ if (r + 2 < rows){
 if (r - 1 >= 0){
   if (c + 2 < cols){
       if (data[r - 1] [c + 2] != -1){
-          if (data [r - 1] [c + 2] < m){
               e[0] = data[r - 1] [c +2];
               e[1]= r - 1;
               e[2] = c + 2;
               yes.add(e);
-          }
-          m ++;
+
       }
   }
   //        x
@@ -390,12 +384,11 @@ if (r - 1 >= 0){
   //   __ __
   if (c - 2  >= 0){
       if (data[r - 1] [c - 2] != -1){
-          if(data [r - 1] [c - 2]< m){
               f[0] = data[r - 1] [c - 2];
               f[1] = r - 1;
               f[2] = c - 2;
               yes.add(f);
-          }
+
     }
 }
 }
@@ -406,12 +399,11 @@ if (r - 1 >= 0){
 if (r - 2 >= 0){
   if (c + 1 < cols){
       if ( data[r - 2] [c + 1] == 0){
-          if (data [r - 2] [c + 1] < m);
           g[0] = data[r - 2] [c + 1];
           g[1] = r - 2;
           g[2] = c + 1;
           yes.add(g);
-      }
+
   }
   //     x
   //     |
@@ -419,31 +411,45 @@ if (r - 2 >= 0){
   //   __
   if (c - 1  >= 0){
       if (data[r - 2] [c - 1] == 0){
-         if(data [r -2] [c - 1] < m){
           h[0] = data[r -2] [c - 1];
           h[1] = r -2;
           h[2] = c - 1;
           yes.add(h);
-      }
+
   }
+}
 }
 }
 sort();
 
 }
+private void sort (){
+    int m = yes.get(0)[0];
+    int [] n = new int [3];
+    int p = 0;
+    for(int i = 1; i < yes.size(); i ++){
+        if (yes.get(i)[0] < m){
+            m = yes.get(i)[0];
+            n = yes.get(i);
+            p = i;
+        }
+        yes.remove(p);
+        yes.add(0, n);
+    }
+}
 public boolean solve(int startingRow, int startingCol){
     preview();
     // System.out.println(data.toString());
-    solver(startingRow,startingCol);
+    solver(startingRow,startingCol, 0);
     if (num > 0){
         return true;
     }
     return false;
 }
-private void solver( int r, int c){
-    System.out.println("ko");
+private void solver( int r, int c, int n){
+    // System.out.println("ko");
     if (r < 0 || r > rows - 1 || c < 0 || c > cols - 1){
-        System.out.println("uisfjhbfkdsbk");;
+        // System.out.println("uisfjhbfkdsbk");;
     }
     else if (data [r][c] == -1){
     ;
@@ -460,25 +466,28 @@ private void solver( int r, int c){
 
     // once the knight moves, its other options are put on hold while it finishes
     else if(addKnight(r,c)){
-        System.out.println("uisfjhbfkdsbk");
+        // System.out.println("uisfjhbfkdsbk");
         o = data[r][c];
     data[r][c] = -1;
-    System.out.println(this.toString());
+    // System.out.println(this.toString());
     update(r,c);
-        System.out.println(this.toString());
+        // System.out.println(this.toString());
     if (checker()){
         num ++;
-        System.out.println("UFFBKSBDFDJSBFJDSBFKU");
+        // System.out.println("UFFBKSBDFDJSBFJDSBFKU");
     }
     else{
         leastnmove(r,c);
-    System.out.println("kokokoko");
-    solver(grand[0], grand[1]);
+    // System.out.println("kokokoko");
+    solver(yes.get(0)[1], yes.get(0)[2], 0);
 }
-System.out.println("HELEPEPEP");
+// System.out.println("HELEPEPEP");
 data[r][c] = o;
 }
-System.out.println("nononnonon");
+// System.out.println("nononnonon");
+if (n + 1 < yes.size()){
+solver(yes.get(n + 1)[1], yes.get(n + 1)[2], n+ 1);
+}
 }
 public boolean checker(){
     for (int r = 0; r < rows; r ++){
