@@ -1,3 +1,4 @@
+import java.util.*;
 public class KnightBoard {
     private int rows;
     private int cols;
@@ -5,7 +6,9 @@ public class KnightBoard {
     private int [] grand;
     private int [][] data;
     private int o;
+    private ArrayList<int[]> yes;
     public KnightBoard (int startingRows,int startingCols){
+        yes = new ArrayList<int[]>();
         grand = new int [2];
         rows = startingRows;
         cols = startingCols;
@@ -302,16 +305,17 @@ public boolean nomoves(int r, int c){
     return true;
 }
 private void leastnmove(int r,int c){
+    int m = 0;
     int x = 0;
     int y = 0;
-    int m = 0;
-    //   __ __
+
+//   __ __
 //  |
 //  x
 if (r + 1 < rows ){
   if (c + 2 < cols){
       if (data[r + 1] [c +2] != -1){
-          m = data[r + 1] [c +2];
+          yes.add(data[r + 1] [c +2]);
           x = r + 1;
           y = c + 2;
       }
@@ -322,7 +326,7 @@ if (r + 1 < rows ){
   if (c - 2  >= 0){
       if (data[r + 1] [c - 2] != -1){
           if (data[r + 1] [c - 2] < m){
-              m = data[r + 1] [c - 2];
+              yes.add(data[r + 1] [c - 2]);
               x = r + 1;
               y = c -  2;
           }
@@ -337,7 +341,7 @@ if (r + 2 < rows){
   if (c + 1 < cols){
       if (data[r + 2] [c +1] != -1){
           if(data [r + 2] [c + 1] < m){
-              m = data[r + 2] [c +1];
+             yes.add(data[r + 2] [c +1]);
               x = r + 2;
               y = c + 1;
           }
@@ -350,7 +354,7 @@ if (r + 2 < rows){
   if (c - 1  >= 0){
       if (data[r + 2] [c - 1] != -1){
           if(data [r + 2] [c - 1]< m){
-              m = data[r + 2] [c - 1];
+              yes.add(data[r + 2] [c - 1]);
               x = r + 2;
               y = c - 1;
           }
@@ -364,7 +368,7 @@ if (r - 1 >= 0){
   if (c + 2 < cols){
       if (data[r - 1] [c + 2] != -1){
           if (data [r - 1] [c + 2] < m){
-              m = data[r - 1] [c +2];
+              yes.add(data[r - 1] [c +2]);
               x = r - 1;
               y = c + 2;
           }
@@ -377,7 +381,7 @@ if (r - 1 >= 0){
   if (c - 2  >= 0){
       if (data[r - 1] [c - 2] != -1){
           if(data [r - 1] [c - 2]< m){
-              m = data[r - 1] [c - 2];
+              yes.add(data[r - 1] [c - 2]);
               x = r - 1;
               y = c - 2;
           }
@@ -392,7 +396,7 @@ if (r - 2 >= 0){
   if (c + 1 < cols){
       if ( data[r - 2] [c + 1] == 0){
           if (data [r - 2] [c + 1] < m);
-          m = data[r - 2] [c + 1];
+          yes.add(data[r - 2] [c + 1]);
           x = r - 2;
           y = c + 1;
       }
@@ -404,15 +408,15 @@ if (r - 2 >= 0){
   if (c - 1  >= 0){
       if (data[r - 2] [c - 1] == 0){
          if(data [r -2] [c - 1] < m){
-          m = data[r -2] [c - 1];
+          yes.add(data[r -2] [c - 1]);
           x = r -2;
           y = c - 1;
       }
   }
 }
 }
-grand [0] = x;
-grand [1] = y;
+sort();
+
 }
 public boolean solve(int startingRow, int startingCol){
     preview();
@@ -445,22 +449,23 @@ private void solver( int r, int c){
     else if(addKnight(r,c)){
         System.out.println("uisfjhbfkdsbk");
         o = data[r][c];
-    data[r][c] = - 1;
+    data[r][c] = -1;
     System.out.println(this.toString());
     update(r,c);
         System.out.println(this.toString());
     if (checker()){
         num ++;
-        // System.out.println("UFFBKSBDFDJSBFJDSBFKU");
+        System.out.println("UFFBKSBDFDJSBFJDSBFKU");
     }
     else{
         leastnmove(r,c);
     System.out.println("kokokoko");
     solver(grand[0], grand[1]);
 }
-System.out.println("kokok");
+System.out.println("HELEPEPEP");
 data[r][c] = o;
 }
+System.out.println("nononnonon");
 }
 public boolean checker(){
     for (int r = 0; r < rows; r ++){
