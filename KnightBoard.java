@@ -474,12 +474,13 @@ private void solver( int r, int c, int n){
         // System.out.println(this.toString());
     if (checker()){
         num ++;
-        // System.out.println("UFFBKSBDFDJSBFJDSBFKU");
+        System.out.println("UFFBKSBDFDJSBFJDSBFKU");
     }
     else{
         leastnmove(r,c);
     // System.out.println("kokokoko");
     solver(yes.get(0)[1], yes.get(0)[2], 0);
+        yes = new ArrayList<int[]>();
 }
 // System.out.println("HELEPEPEP");
 data[r][c] = o;
@@ -487,6 +488,7 @@ data[r][c] = o;
 // System.out.println("nononnonon");
 if (n + 1 < yes.size()){
 solver(yes.get(n + 1)[1], yes.get(n + 1)[2], n+ 1);
+
 }
 }
 public boolean checker(){
