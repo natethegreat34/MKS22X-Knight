@@ -6,8 +6,16 @@ public class KnightBoard {
     private int [] grand;
     private int [][] data;
     private int o;
+    private ArrayList<int[]> prev;
     private ArrayList<int[]> yes;
+    //         /
+    //        /
+    //       /
+    // \    /
+    //  \  /
+    //   v
     public KnightBoard (int startingRows,int startingCols){
+        prev = new ArrayList<int[]>();
         yes = new ArrayList<int[]>();
         grand = new int [2];
         rows = startingRows;
@@ -113,13 +121,24 @@ public int nmoves(int r, int c){
     }
     return n;
     }
+    //         /
+    //        /
+    //       /
+    // \    /
+    //  \  /
+    //   v
 private boolean addKnight(int r, int c){
     if (data [r] [c] == -1) {
         return false;
     }
     return true;
 }
-
+//         /
+//        /
+//       /
+// \    /
+//  \  /
+//   v
 public String toString(){
     int i = 0;
     String display = "";
@@ -148,6 +167,12 @@ public String toString(){
 // @throws IllegalStateException when the board contains non-zero values.
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
+//         /
+//        /
+//       /
+// \    /
+//  \  /
+//   v
 public void update(int r,int c){
     int n = 0;
     if (r + 1 < rows ){
@@ -225,13 +250,19 @@ public void update(int r,int c){
 
     }
 }
+//         /
+//        /
+//       /
+// \    /
+//  \  /
+//   v
 public boolean nomoves(int r, int c){
         //   __ __
     //  |
     //  x
     if (r + 1 < rows ){
       if (c + 2 < cols){
-          if (data[r + 1] [c +2] == 0){
+          if (data[r + 1] [c +2] != -1){
               return false;
           }
       }
@@ -239,7 +270,7 @@ public boolean nomoves(int r, int c){
      //        |
      //        x
       if (c - 2  >= 0){
-          if (data[r + 1] [c - 2] == 0){
+          if (data[r + 1] [c - 2] != -1){
               return false;
           }
       }
@@ -250,7 +281,7 @@ public boolean nomoves(int r, int c){
     //  x
     if (r + 2 < rows){
       if (c + 1 < cols){
-          if (data[r + 2] [c +1] == 0){
+          if (data[r + 2] [c +1] != -1){
               return false;
           }
       }
@@ -259,7 +290,7 @@ public boolean nomoves(int r, int c){
       //    |
       //    x
       if (c - 1  >= 0){
-          if (data[r + 2] [c - 1] == 0){
+          if (data[r + 2] [c - 1] != -1){
               return false;
           }
       }
@@ -269,7 +300,7 @@ public boolean nomoves(int r, int c){
     //   __ __
     if (r - 1 >= 0){
       if (c + 2 < cols){
-          if (data[r - 1] [c + 2] == 0){
+          if (data[r - 1] [c + 2] != -1){
               return false;
           }
       }
@@ -277,7 +308,7 @@ public boolean nomoves(int r, int c){
       //        |
       //   __ __
       if (c - 2  >= 0){
-          if (data[r - 1] [c - 2] == 0){
+          if (data[r - 1] [c - 2] != -1){
               return false;
           }
         }
@@ -288,7 +319,7 @@ public boolean nomoves(int r, int c){
     //   __
     if (r - 2 >= 0){
       if (c + 1 < cols){
-          if ( data[r - 2] [c + 1] == 0){
+          if ( data[r - 2] [c + 1] != -1){
               return false;
           }
       }
@@ -297,7 +328,7 @@ public boolean nomoves(int r, int c){
       //     |
       //   __
       if (c - 1  >= 0){
-          if (data[r - 2] [c - 1] == 0){
+          if (data[r - 2] [c - 1] != -1){
               return false;
           }
       }
@@ -478,8 +509,9 @@ private void solver( int r, int c, int n){
     }
     else{
         leastnmove(r,c);
+        prev = yes;
     // System.out.println("kokokoko");
-    solver(yes.get(0)[1], yes.get(0)[2], 0);
+    solver(prev.get(0)[1], prev.get(0)[2], 0);
         yes = new ArrayList<int[]>();
 }
 // System.out.println("HELEPEPEP");
@@ -491,6 +523,12 @@ solver(yes.get(n + 1)[1], yes.get(n + 1)[2], n+ 1);
 
 }
 }
+//         /
+//        /
+//       /
+// \    /
+//  \  /
+//   v
 public boolean checker(){
     for (int r = 0; r < rows; r ++){
         for (int c = 0; c < cols; c ++){
@@ -506,6 +544,12 @@ public boolean checker(){
 // @throws IllegalStateException when the board contains non-zero values.
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
+//         /
+//        /
+//       /
+// \    /
+//  \  /
+//   v
 public int countSolutions(int startingRow, int startingCol){
     solve(startingRow, startingCol);
     return num;
