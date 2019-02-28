@@ -5,6 +5,8 @@ public class KnightBoard {
     private int num;
     private int [][] data;
     public KnightBoard (int startingRows,int startingCols){
+        // System.out.println("hello");
+        num = 0;
         rows = startingRows;
         cols = startingCols;
         data = new int [rows] [cols];
@@ -12,12 +14,75 @@ public class KnightBoard {
     }
 //Initialize the board to the correct size and make them all 0's
 private void preview (){
+    // System.out.println("boo");
     for (int r = 0; r < data.length; r ++){
         for (int c = 0; c < data [0].length; c ++){
             data [r] [c] = nmoves(r, c);
             // System.out.println(data [r] [c]);
 }
 }
+}
+public void update(int r,int c){
+    int n = 0;
+    if (r + 1 < rows ){
+      if (c + 2 < cols){
+              data[r + 1] [c +2] = nmoves(r + 1, c + 2);
+          }
+     //   __ __
+     //        |
+     //        x
+      if (c - 2  >= 0){
+              data[r + 1] [c - 2] = nmoves(r + 1, c - 2);
+      }
+    }
+    //   __
+    //  |
+    //  |
+    //  x
+    if (r + 2 < rows){
+      if (c + 1 < cols){
+              data[r + 2] [c +1] = nmoves(r + 2, c + 1);
+      }
+      //  __
+      //    |
+      //    |
+      //    x
+      if (c - 1  >= 0){
+              data[r + 2] [c - 1] = nmoves(r + 2, c - 1);
+      }
+    }
+    //  x
+    //  |
+    //   __ __
+    if (r - 1 >= 0){
+      if (c + 2 < cols){
+              data[r - 1] [c + 2] = nmoves(r - 1, c + 2);;
+          }
+      //        x
+      //        |
+      //   __ __
+      if (c - 2  >= 0){
+              data[r - 1] [c - 2] = nmoves(r - 1, c - 2);
+          }
+    }
+    //  x
+    //  |
+    //  |
+    //   __
+    if (r - 2 >= 0){
+      if (c + 1 < cols){
+              data[r - 2] [c + 1] = nmoves(r - 2, c + 1);
+
+      }
+      //     x
+      //     |
+      //     |
+      //   __
+      if (c - 1  >= 0){
+              data[r - 2] [c - 1] = nmoves(r - 2, c - 1);
+          }
+      }
+
 }
 public int nmoves(int r, int c){
     int n = 0;
@@ -26,7 +91,7 @@ public int nmoves(int r, int c){
     // System.out.println(this);
     if (r + 1 < rows && r + 1 >=0){
       if (c + 2 < cols && c + 2 >=0){
-          if (data[r + 1] [c +2] == 0){
+          if (data[r + 1] [c +2] != -1){
               n ++;
           }
       }
@@ -34,7 +99,7 @@ public int nmoves(int r, int c){
      //        |
      //        x
       if (c - 2  >= 0 && c - 2 < cols){
-          if (data[r + 1] [c - 2] == 0){
+          if (data[r + 1] [c - 2] != -1){
               n ++;
           }
       }
@@ -45,7 +110,8 @@ public int nmoves(int r, int c){
     //  x
     if (r + 2 < rows && r + 2 >=0){
       if (c + 1 < cols && c+ 1 >=0){
-          if (data[r + 2] [c +1] == 0){
+          if (data[r + 2] [c +1] != -1){
+              // System.out.println("helpfagsfdd");
               n ++;
           }
       }
@@ -54,7 +120,7 @@ public int nmoves(int r, int c){
       //    |
       //    x
       if (c - 1  >= 0 && c -1  < cols){
-          if (data[r + 2] [c - 1] == 0){
+          if (data[r + 2] [c - 1] != -1){
               n ++;
           }
       }
@@ -64,7 +130,7 @@ public int nmoves(int r, int c){
     //   __ __
     if (r - 1 >= 0 && r - 1 < rows){
       if (c + 2 < cols && c + 2 >=0){
-          if (data[r - 1] [c + 2] == 0){
+          if (data[r - 1] [c + 2] != -1){
               n ++;
           }
       }
@@ -72,7 +138,7 @@ public int nmoves(int r, int c){
       //        |
       //   __ __
       if (c - 2  >= 0 && c - 2 < cols){
-          if (data[r - 1] [c - 2] == 0){
+          if (data[r - 1] [c - 2] != -1){
               n ++;
           }
         }
@@ -83,7 +149,7 @@ public int nmoves(int r, int c){
     //   __
     if (r - 2 >= 0 && r -2 < rows){
       if (c + 1 < cols && c + 1 >=0){
-          if ( data[r - 2] [c + 1] == 0){
+          if ( data[r - 2] [c + 1] != -1){
               n ++;
           }
       }
@@ -92,15 +158,16 @@ public int nmoves(int r, int c){
       //     |
       //   __
       if (c - 1  >= 0 && c - 1 < cols){
-          if (data[r - 2] [c - 1] == 0){
+          if (data[r - 2] [c - 1] != -1){
               n ++;
           }
       }
     }
+    // System.out.println(n);
     return n;
     }
 private boolean addKnight(int r, int c){
-    if (data [r] [c] != 0) {
+    if (data [r] [c] == -1) {
         return false;
     }
     return true;
@@ -135,13 +202,14 @@ public String toString(){
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
 private ArrayList <Place> generatemoves(int r, int c){
+    // System.out.println(num);
     ArrayList <Place> moves = new ArrayList <Place> ();
         //   __ __
     //  |
     //  x
     if (r + 1 < rows ){
       if (c + 2 < cols){
-          if (data[r + 1] [c +2] == 0){
+          if (data[r + 1] [c +2] != -1){
               Place p = new Place(r+1, c+2);
               p.setp(nmoves(r+1, c+2));
               moves.add(p);
@@ -151,7 +219,7 @@ private ArrayList <Place> generatemoves(int r, int c){
      //        |
      //        x
       if (c - 2  >= 0){
-          if (data[r + 1] [c - 2] == 0){
+          if (data[r + 1] [c - 2] != -1){
               Place p = new Place(r+1, c-2);
               p.setp(nmoves(r+1, c-2));
               moves.add(p);
@@ -164,7 +232,7 @@ private ArrayList <Place> generatemoves(int r, int c){
     //  x
     if (r + 2 < rows){
       if (c + 1 < cols){
-          if (data[r + 2] [c +1] == 0){
+          if (data[r + 2] [c +1] != -1){
               Place p = new Place(r+2, c+1);
               p.setp(nmoves(r+2, c+1));
               moves.add(p);
@@ -175,7 +243,7 @@ private ArrayList <Place> generatemoves(int r, int c){
       //    |
       //    x
       if (c - 1  >= 0){
-          if (data[r + 2] [c - 1] == 0){
+          if (data[r + 2] [c - 1] != -1){
               Place p = new Place(r+2, c-1);
               p.setp(nmoves(r+2, c-1));
               moves.add(p);
@@ -187,7 +255,7 @@ private ArrayList <Place> generatemoves(int r, int c){
     //   __ __
     if (r - 1 >= 0){
       if (c + 2 < cols){
-          if (data[r - 1] [c + 2] == 0){
+          if (data[r - 1] [c + 2] != -1){
               Place p = new Place(r-1, c+2);
               p.setp(nmoves(r-1, c+2));
               moves.add(p);
@@ -197,7 +265,7 @@ private ArrayList <Place> generatemoves(int r, int c){
       //        |
       //   __ __
       if (c - 2  >= 0){
-          if (data[r - 1] [c - 2] == 0){
+          if (data[r - 1] [c - 2] != -1){
               Place p = new Place(r-1, c-2);
               p.setp(nmoves(r-1, c-2));
               moves.add(p);
@@ -210,7 +278,7 @@ private ArrayList <Place> generatemoves(int r, int c){
     //   __
     if (r - 2 >= 0){
       if (c + 1 < cols){
-          if ( data[r - 2] [c + 1] == 0){
+          if ( data[r - 2] [c + 1] != -1){
               Place p = new Place(r-2, c+1);
               p.setp(nmoves(r-2, c+1));
               moves.add(p);
@@ -221,97 +289,21 @@ private ArrayList <Place> generatemoves(int r, int c){
       //     |
       //   __
       if (c - 1  >= 0){
-          if (data[r - 2] [c - 1] == 0){
+          if (data[r - 2] [c - 1] != -1){
               Place p = new Place(r-2, c+2);
               p.setp(nmoves(r-2, c+2));
               moves.add(p);
           }
       }
   }
-    Collections.sort(moves);
+  // System.out.println(this);
+  //   Collections.sort(moves);
+  //   System.out.println(this);
     return moves;
-}
-public boolean nomoves(int r, int c){
-        //   __ __
-    //  |
-    //  x
-    if (r + 1 < rows ){
-      if (c + 2 < cols){
-          if (data[r + 1] [c +2] == 0){
-              return false;
-          }
-      }
-     //   __ __
-     //        |
-     //        x
-      if (c - 2  >= 0){
-          if (data[r + 1] [c - 2] == 0){
-              return false;
-          }
-      }
-  }
-    //   __
-    //  |
-    //  |
-    //  x
-    if (r + 2 < rows){
-      if (c + 1 < cols){
-          if (data[r + 2] [c +1] == 0){
-              return false;
-          }
-      }
-      //  __
-      //    |
-      //    |
-      //    x
-      if (c - 1  >= 0){
-          if (data[r + 2] [c - 1] == 0){
-              return false;
-          }
-      }
-    }
-    //  x
-    //  |
-    //   __ __
-    if (r - 1 >= 0){
-      if (c + 2 < cols){
-          if (data[r - 1] [c + 2] == 0){
-              return false;
-          }
-      }
-      //        x
-      //        |
-      //   __ __
-      if (c - 2  >= 0){
-          if (data[r - 1] [c - 2] == 0){
-              return false;
-          }
-        }
-    }
-    //  x
-    //  |
-    //  |
-    //   __
-    if (r - 2 >= 0){
-      if (c + 1 < cols){
-          if ( data[r - 2] [c + 1] == 0){
-              return false;
-          }
-      }
-      //     x
-      //     |
-      //     |
-      //   __
-      if (c - 1  >= 0){
-          if (data[r - 2] [c - 1] == 0){
-              return false;
-          }
-      }
-  }
-    return true;
 }
 
 public boolean solve(int startingRow, int startingCol){
+    preview();
     solver(startingRow,startingCol, 1);
     if (num > 0){
         return true;
@@ -319,41 +311,38 @@ public boolean solve(int startingRow, int startingCol){
     return false;
 }
 private void solver( int r, int c, int n){
+    // System.out.println("helpndjwkbkw");
+
     if (r < 0 || r > rows - 1 || c < 0 || c > cols - 1){
+        // System.out.println("supuspuspuspu");
+        ;
         // em.out.println("uisfjhbfkdsbk");;
     }
-    else if (data [r][c] != 0){
-        // System.out.println("ppop");
-    }
     // System.out.println(nomoves(r,c));
-
-
-
-        // System.out.println("YGDGIYDGFIYVZSFIVDSGUFVAGYSVFHAVFGHDAVFHDVFUVFUGDVFKHGVFKGHVDKGHVFGUVDFUKVDDVYKEVK" + "\n" + data);
-    // if prevr and prevc are equal to one of the options, make it false
-    // if the number of moves equals the area, then we are done and return true
-
-
-    // once the knight moves, its other options are put on hold while it finishes
     else if(addKnight(r,c)){
-    data[r][c] = 1;
+        // System.out.println("lolol");
+        int o = data [r][c];
+    data[r][c] = -1;
+    // update(r,c);
     if (checker()){
         num ++;
         // System.out.println("UFFBKSBDFDJSBFJDSBFKU");
     }
-    else{
         ArrayList <Place> moves = generatemoves(r,c);
     // System.out.println("kokokoko");
-    for (int i = 0; i < moves.size(); i ++)
-        solver (moves.get(i).getrow(), moves.get(i).getcol(), n +1);
-}data [r][c] = 0;
+    for (int i = 0; i < moves.size(); i ++){
+        Place q = moves.get(i);
+        solver (q.getrow(), q.getcol(), n +1);
+    }
+        data [r][c] = o;
+            // update(r,c);
 
-}
+    }
 }
 public boolean checker(){
     for (int r = 0; r < rows; r ++){
         for (int c = 0; c < cols; c ++){
-            if (data [r] [c] == 0){
+            if (data [r] [c] != -1){
                 return false;
             }
         }
