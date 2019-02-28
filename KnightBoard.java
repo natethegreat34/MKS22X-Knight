@@ -4,7 +4,11 @@ public class KnightBoard {
     private int cols;
     private int num;
     private int [][] data;
+    //@throws IllegalArgumentException when either parameter is <= 0.
     public KnightBoard (int startingRows,int startingCols){
+        if (startingRows <= 0 || startingCols <= 0){
+            throw new IllegalStateException ("");
+        }
         // System.out.println("hello");
         num = 0;
         rows = startingRows;
@@ -26,12 +30,14 @@ public void update(int r,int c){
     int n = 0;
     if (r + 1 < rows ){
       if (c + 2 < cols){
+          if (data[r + 1] [c +2] != -1)
               data[r + 1] [c +2] = nmoves(r + 1, c + 2);
           }
      //   __ __
      //        |
      //        x
       if (c - 2  >= 0){
+          if (data[r + 1] [c - 2] != -1)
               data[r + 1] [c - 2] = nmoves(r + 1, c - 2);
       }
     }
@@ -41,6 +47,7 @@ public void update(int r,int c){
     //  x
     if (r + 2 < rows){
       if (c + 1 < cols){
+          if (data[r + 2] [c +1] != -1)
               data[r + 2] [c +1] = nmoves(r + 2, c + 1);
       }
       //  __
@@ -48,6 +55,7 @@ public void update(int r,int c){
       //    |
       //    x
       if (c - 1  >= 0){
+          if (data[r + 2] [c - 1] != -1)
               data[r + 2] [c - 1] = nmoves(r + 2, c - 1);
       }
     }
@@ -56,12 +64,14 @@ public void update(int r,int c){
     //   __ __
     if (r - 1 >= 0){
       if (c + 2 < cols){
+          if (data[r - 1] [c +2] != -1)
               data[r - 1] [c + 2] = nmoves(r - 1, c + 2);;
           }
       //        x
       //        |
       //   __ __
       if (c - 2  >= 0){
+          if (data[r - 1] [c - 2] != -1)
               data[r - 1] [c - 2] = nmoves(r - 1, c - 2);
           }
     }
@@ -71,6 +81,7 @@ public void update(int r,int c){
     //   __
     if (r - 2 >= 0){
       if (c + 1 < cols){
+          if (data[r -2] [c +1] != -1)
               data[r - 2] [c + 1] = nmoves(r - 2, c + 1);
 
       }
@@ -79,6 +90,7 @@ public void update(int r,int c){
       //     |
       //   __
       if (c - 1  >= 0){
+          if (data[r - 2] [c - 1] != -1)
               data[r - 2] [c - 1] = nmoves(r - 2, c - 1);
           }
       }
@@ -172,7 +184,9 @@ private boolean addKnight(int r, int c){
     }
     return true;
 }
-
+// -you get a blank board if you never called solve or when there is no solution
+// -blank boards display 0's as underscores
+// @returns the properly formatted string (see format for toString later in the post)
 public String toString(){
     int i = 0;
     String display = "";
@@ -181,8 +195,8 @@ public String toString(){
         // System.out.println("ppodle");
         for (int c = 0; c < data [0].length; c ++){
             // System.out.println("hello??");
-                if (data [r] [c] == 0){
-                    display = display + " " + "_";
+                if (data [r] [c] == -1){
+                    display = display + " " + "N";
                 }
                 else display = display + " " + data [r][c];
                 i ++;
@@ -193,14 +207,6 @@ public String toString(){
     return display;
   }
 
-// see format for toString below
-// blank boards display 0's as underscores
-// you get a blank board if you never called solve or
-// when there is no solution
-//
-// @throws IllegalStateException when the board contains non-zero values.
-// @throws IllegalArgumentException when either parameter is negative
-//  or out of bounds.
 private ArrayList <Place> generatemoves(int r, int c){
     // System.out.println(num);
     ArrayList <Place> moves = new ArrayList <Place> ();
@@ -290,8 +296,8 @@ private ArrayList <Place> generatemoves(int r, int c){
       //   __
       if (c - 1  >= 0){
           if (data[r - 2] [c - 1] != -1){
-              Place p = new Place(r-2, c+2);
-              p.setp(nmoves(r-2, c+2));
+              Place p = new Place(r-2, c - 1);
+              p.setp(nmoves(r-2, c - 1));
               moves.add(p);
           }
       }
@@ -303,6 +309,16 @@ private ArrayList <Place> generatemoves(int r, int c){
 }
 
 public boolean solve(int startingRow, int startingCol){
+    if (startingRow < 0 || startingCol < 0){
+        throw new IllegalStateException ("");
+    }
+    for (int r = 0; r < rows; r ++){
+        for (int c = 0; c < cols; c ++){
+            if (data [r] [c] != 0){
+                throw new IllegalStateException ("");
+            }
+        }
+    }
     preview();
     solver(startingRow,startingCol, 1);
     if (num > 0){
@@ -323,11 +339,11 @@ private void solver( int r, int c, int n){
         // System.out.println("lolol");
         int o = data [r][c];
     data[r][c] = -1;
-    // update(r,c);
     if (checker()){
         num ++;
         // System.out.println("UFFBKSBDFDJSBFJDSBFKU");
     }
+    update(r,c);
         ArrayList <Place> moves = generatemoves(r,c);
     // System.out.println("kokokoko");
     for (int i = 0; i < moves.size(); i ++){
@@ -335,7 +351,7 @@ private void solver( int r, int c, int n){
         solver (q.getrow(), q.getcol(), n +1);
     }
         data [r][c] = o;
-            // update(r,c);
+            update(r,c);
 
     }
 }
@@ -355,6 +371,16 @@ public boolean checker(){
 // @throws IllegalArgumentException when either parameter is negative
 //  or out of bounds.
 public int countSolutions(int startingRow, int startingCol){
+    if (startingRow < 0 || startingCol < 0){
+        throw new IllegalStateException ("");
+    }
+    for (int r = 0; r < rows; r ++){
+        for (int c = 0; c < cols; c ++){
+            if (data [r] [c] != 0){
+                throw new IllegalStateException ("");
+            }
+        }
+    }
     solve(startingRow, startingCol);
     return num;
 }
