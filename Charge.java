@@ -1,6 +1,6 @@
 public class Charge{
     public static void main(String[] args) {
-        runTest(5);
+        runTest(4);
     }
     //testcase must be a valid index of your input/output array
     public static void runTest(int i){
